@@ -71,7 +71,7 @@ define(["app/plugins/sdk"], function(__WEBPACK_EXTERNAL_MODULE_1__) { return /**
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.PanelCtrl = undefined;
 
@@ -96,44 +96,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // Remove up to here
 
-var Ctrl = function (_PanelCtrl) {
-  _inherits(Ctrl, _PanelCtrl);
+var Ctrl = function (_MetricsPanelCtrl) {
+    _inherits(Ctrl, _MetricsPanelCtrl);
 
-  function Ctrl($scope, $injector) {
-    _classCallCheck(this, Ctrl);
+    function Ctrl($scope, $injector) {
+        _classCallCheck(this, Ctrl);
 
-    return _possibleConstructorReturn(this, (Ctrl.__proto__ || Object.getPrototypeOf(Ctrl)).call(this, $scope, $injector));
-  }
+        var _this = _possibleConstructorReturn(this, (Ctrl.__proto__ || Object.getPrototypeOf(Ctrl)).call(this, $scope, $injector));
 
-  _createClass(Ctrl, [{
-    key: 'link',
-    value: function link(scope, element) {
-      this.initStyles();
+        console.log('hello from console');
+        _this.events.on('data-received', _this._onDataReceived.bind(_this));
+        _this.message = 'hello!';
+        _this.image_link = 'https://camo.githubusercontent.com/d010ea19c70677a0bfd8a64fc01d2b0948e1ffc1/687474703a2f2f646f63732e67726166616e612e6f72672f6173736574732f696d672f66656174757265732f64617368626f6172645f6578312e706e67';
+        return _this;
     }
-  }, {
-    key: 'initStyles',
-    value: function initStyles() {
-      window.System.import(this.panelPath + 'css/panel.base.css!');
-      // Remove next lines if you don't need separate styles for light and dark themes
-      if (grafanaBootData.user.lightTheme) {
-        window.System.import(this.panelPath + 'css/panel.light.css!');
-      } else {
-        window.System.import(this.panelPath + 'css/panel.dark.css!');
-      }
-      // Remove up to here
-    }
-  }, {
-    key: 'panelPath',
-    get: function get() {
-      if (this._panelPath === undefined) {
-        this._panelPath = '/public/plugins/' + this.pluginId + '/';
-      }
-      return this._panelPath;
-    }
-  }]);
 
-  return Ctrl;
-}(_sdk.PanelCtrl);
+    _createClass(Ctrl, [{
+        key: '_onDataReceived',
+        value: function _onDataReceived(data) {
+            console.log('test');
+            console.log(data[0].datapoints[0]);
+            this.image_link = data[0].datapoints[0].signedUrl;
+        }
+    }, {
+        key: 'link',
+        value: function link(scope, element) {
+            this.initStyles();
+        }
+    }, {
+        key: 'initStyles',
+        value: function initStyles() {
+            window.System.import(this.panelPath + 'css/panel.base.css!');
+            // Remove next lines if you don't need separate styles for light and dark themes
+            if (grafanaBootData.user.lightTheme) {
+                window.System.import(this.panelPath + 'css/panel.light.css!');
+            } else {
+                window.System.import(this.panelPath + 'css/panel.dark.css!');
+            }
+            // Remove up to here
+        }
+    }, {
+        key: 'panelPath',
+        get: function get() {
+            if (this._panelPath === undefined) {
+                this._panelPath = '/public/plugins/' + this.pluginId + '/';
+            }
+            return this._panelPath;
+        }
+    }]);
+
+    return Ctrl;
+}(_sdk.MetricsPanelCtrl);
 
 Ctrl.templateUrl = 'partials/template.html';
 
